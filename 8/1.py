@@ -1,3 +1,6 @@
+import time
+
+
 def parse_instructions(data):
     instructions = []
     for d in data:
@@ -13,7 +16,6 @@ instructions = parse_instructions(data)
 
 
 def loop(INSTRUC):
-    INSTRUC = INSTRUC[:]
     IP = 0
     ACC = 0
     EXIT_CODE=0
@@ -41,11 +43,14 @@ def loop(INSTRUC):
 
 
 print('PART ONE')
-loop(instructions)
+start = time.time()
+loop(instructions[:])
+print(f'took: {round((time.time() - start)*1000000)}ns')
 
 
 
 print('\n\n\nPART TWO')
+start = time.time()
 for i in range(len(instructions)):
     patched_instruc = instructions[:]
     if instructions[i][0] == 'nop':
@@ -54,3 +59,4 @@ for i in range(len(instructions)):
         patched_instruc[i] = ('nop', patched_instruc[i][1], False)
     if loop(patched_instruc) == 0:
         break
+print(f'took: {round((time.time() - start)*1000000)}ns')
